@@ -20,7 +20,7 @@ class BookingController extends Controller
     public function pendingBookings()
     {
         $pendingBookings = Booking::where('status', 'pending')
-            ->get();
+            ->get(['poya_day_id','name','email','phone','notes','created_at']);
 
         return response()->json([
             'pendingBookings' => $pendingBookings
