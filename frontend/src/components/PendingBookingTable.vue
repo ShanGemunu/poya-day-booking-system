@@ -1,120 +1,102 @@
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, getCurrentInstance } from 'vue';
 
-// Reactive state for snackbar visibility
-const snackbar = ref(false);
-const isActive = ref(false);
+const { proxy } = getCurrentInstance()
 
-// Show snackbar function
-function showSnackbar() {
-  snackbar.value = true;
+const showDialog = ref(false)
+
+// choose or not to approve
+const isChooseToApprove = ref(false)
+
+const pendingBookings = ref([])
+
+const getPendingBookings = () => {
+    proxy.$http.post(`pending-bookings`)
+        .then(response => {
+            pendingBookings.value = response.data.pendingBookings
+        })
+        .catch(error => {
+            if (error.response.status === 401) {
+                alert("You need to login as Admin to view this page!")
+            }
+        })
 }
 
-function test(){
-    isActive.value = false
-    showSnackbar()
+getPendingBookings()
+
+// open dialog before appove or reject booking
+const openDialog = (argIsChooseToApprove) => {
+    // choose or not to approve
+    isChooseToApprove.value = argIsChooseToApprove
+
+    // pop up dialog
+    showDialog.value = true
+}
+
+// close dialog right after approve or reject booking
+const closeDialog = (isConfirm) => {
+    // if action confirmed  
+    if(isConfirm){
+        // if choose to approve
+        if(isChooseToApprove.value){
+            alert("approved")
+            // close dialog
+            showDialog.value = false
+
+            return
+        }
+        // if choose to reject
+        alert("rejected")
+    }
+
+    // close dialog
+    showDialog.value = false
 }
 
 const headers = [
-    { title: 'ID', key: 'id', align: 'start' },
+    { title: 'Poya Day', key: 'poyaDay' },
     { title: 'Name', key: 'name' },
-    { title: 'Dept', key: 'department' },
-    { title: 'Role', key: 'role' },
-    { title: 'Salary($)', key: 'salary', align: 'end' },
-    { title: 'HireDate', key: 'hireDate' },
-    { title: 'Hours/Wk', key: 'hoursPerWeek', align: 'end' },
-    { title: 'Location', key: 'location' },
-    { title: 'Status', key: 'status' },
-    { title: '', key: 'score', align: 'end' },
+    { title: 'Email', key: 'email' },
+    { title: 'Phone', key: 'phone' },
+    { title: 'Notes', key: 'notes' },
+    { title: 'Created', key: 'created_at' },
+    { title: '', key: 'approval' },
 ]
-const employees = [
-    {
-        id: 'E001',
-        name: 'Alice Johnson',
-        department: 'Engineering',
-        role: 'Software Dev',
-        salary: 95000,
-        hireDate: '2020-03-15',
-        hoursPerWeek: 40,
-        location: 'New York',
-        status: 'Full-Time',
-        score: 4.5,
-    },
-    {
-        id: 'E001',
-        name: 'Alice Johnson',
-        department: 'Engineering',
-        role: 'Software Dev',
-        salary: 95000,
-        hireDate: '2020-03-15',
-        hoursPerWeek: 40,
-        location: 'New York',
-        status: 'Full-Time',
-        score: 4.5,
-    },
-]
-
-const clickFunc = (itemScore) => alert(itemScore)
 
 </script>
 
 
 <template>
-    <v-container>
-    <!-- Trigger Button -->
-    <v-btn @click="showSnackbar">Show snackbar</v-btn>
-
-    <!-- Snackbar Alert -->
-    <v-snackbar v-model="snackbar" :timeout="3000" color="red" location="top">
-      ✅ Your name
-    </v-snackbar>
-  </v-container>
-    <v-data-table :headers="headers" :items="employees" class="text-caption" density="compact" item-value="name"
+    <v-data-table :headers="headers" :items="pendingBookings" class="text-caption" density="compact" item-value="name"
         hide-default-footer hover>
         <template v-slot:item="{ item }">
             <tr class="text-no-wrap">
-                <td>{{ item.id }}</td>
+                <td>{{ item.poyaDay }}</td>
                 <td>{{ item.name }}</td>
-                <td>{{ item.department }}</td>
-                <td>{{ item.role }}</td>
-                <td :class="{
-                    'text-end': true,
-                    'bg-success': item.salary > 80000,
-                    'bg-warning': item.salary > 70000 && item.salary <= 80000,
-                    'bg-error': item.salary <= 70000
-                }" v-text="`$${item.salary.toLocaleString()}`"></td>
-                <td>{{ item.hireDate }}</td>
-                <td class="text-end">{{ item.hoursPerWeek }}</td>
-                <td>{{ item.location }}</td>
-                <td>{{ item.status }}</td>
+                <td>{{ item.email }}</td>
+                <td>{{ item.phone }}</td>
+                <td>{{ item.notes }}</td>
+                <td>{{ item.created_at }}</td>
                 <td class="text-end">
-                    <v-chip :text="item.score.toFixed(2)" append-icon="mdi-open-in-new" size="x-small"></v-chip>
-                    <v-btn class="flex-grow-1" color="blue" text="Book Now" variant="flat"
-                        @click="clickFunc(item.score)"></v-btn>
-                    <v-dialog v-model="isActive" max-width="500" >
-                        <template v-slot:activator="{ props: activatorProps }">
-                            <v-btn v-bind="activatorProps" color="surface-variant" text="Open Dialog"
-                                variant="flat"></v-btn>
-                        </template>
-
-                        <template v-slot:default="{ isActive }">
-                            <v-card title="Dialog">
-                                <v-card-text>
-                                    {{ item.name }}
-                                </v-card-text>
-
-                                <v-card-actions>
-                                    <v-spacer></v-spacer>
-
-                                    <v-btn text="Yes" @click="test"></v-btn>
-                                    <v-btn text="No" @click="test"></v-btn>
-                                </v-card-actions>
-                            </v-card>
-                        </template>
+                    <v-card-actions>
+                        <v-btn class="flex-grow-1" size="small" color="green" text="Approve" variant="flat"
+                            @click="openDialog(true)"></v-btn>
+                        <v-btn class="flex-grow-1" size="small" color="red" text="Reject" variant="flat"
+                            @click="openDialog(false)"></v-btn>
+                    </v-card-actions>
+                    <v-dialog v-model="showDialog" max-width="400">
+                        <v-card>
+                            <v-card-title>Are sure want to</v-card-title>
+                            <v-card-text>
+                            </v-card-text>
+                            <v-card-actions>
+                                <v-btn @click="closeDialog(true)">Confirm</v-btn>
+                                <v-btn @click="closeDialog(false)">Cancel</v-btn>
+                            </v-card-actions>
+                        </v-card>
                     </v-dialog>
                 </td>
             </tr>
         </template>
     </v-data-table>
 </template>
-

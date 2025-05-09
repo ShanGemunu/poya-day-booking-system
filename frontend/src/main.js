@@ -2,6 +2,7 @@ import { createApp } from 'vue'
 import './style.css'
 import App from './App.vue'
 import axiosInstance from './Axios.api'
+import globalVariables from './GlobalVariables'
 import router from './router'
 
 
@@ -19,6 +20,7 @@ const vuetify = createVuetify({
 createApp(App)
 // use an alias as 'http'
 .use(axiosInstance)
+.use(globalVariables)
 .use(router)
 .use(vuetify)
 .mount('#app')

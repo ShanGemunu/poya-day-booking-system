@@ -1,9 +1,5 @@
 <script setup>
 
-const props = defineProps({
-  name: String,
-  age: Number,
-})
 
 const newAge =  props.age + 10
 

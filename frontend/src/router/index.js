@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import BookingProtal from '../Views/BookingProtal.vue'
+import BookingPortal from '../Views/BookingPortal.vue'
 import AdminPortal from '../Views/AdminPortal.vue'
 import Login from '../Views/Login.vue'
 
@@ -7,8 +7,8 @@ import Login from '../Views/Login.vue'
 const routes = [
     {
         path: '/',
-        name: 'BookingProtal',
-        component: BookingProtal
+        name: 'BookingPortal',
+        component: BookingPortal
     },
     {
         path: '/admin',
