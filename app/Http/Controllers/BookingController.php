@@ -59,7 +59,7 @@ class BookingController extends Controller
             }
 
             return response()->json([
-                'message' => "booking's status updated into ." . $approveDetails['approval']
+                'message' => "booking's status updated successfully" 
             ], 200);
         }
 
