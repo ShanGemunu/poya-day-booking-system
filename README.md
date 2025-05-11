@@ -57,17 +57,17 @@ npm run dev
   - booking portal 
       - make a booking for poya day
       - anyone can make a booking
-![alt text](https://github.com/ShanGemunu/poya-day-booking-system/tree/main/readme-images/booking_portal.png?raw=true)
+      ![alt text](https://github.com/ShanGemunu/poya-day-booking-system/blob/main/readme-images/booking_protal.png?raw=true)
 
   - login page
       -  user can login here using credentials, **sample admin credentials,  email: admin@mail.com, password - 1234**  
-![alt text](https://github.com/ShanGemunu/poya-day-booking-system/tree/main/readme-images/login_page.png?raw=true)
+      ![alt text](https://github.com/ShanGemunu/poya-day-booking-system/blob/main/readme-images/login_protal.png?raw=true)
 
   - admin portal  
       -  need to logged as admin to work (sample admin credentials are provided above)
       -  all pending bookings are there
       -  can approve or reject bookings
-![alt text](https://github.com/ShanGemunu/poya-day-booking-system/tree/main/readme-images/admin_portal.png?raw=true)
+      ![alt text](https://github.com/ShanGemunu/poya-day-booking-system/blob/main/readme-images/admin_protal.png?raw=true)
 
 - authenticated user can logged out using **logout** button at navbar
    
