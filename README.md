@@ -15,7 +15,7 @@ This is a web application developed using laravel(api) and vue(single page appli
 2. In root directory execute following command to install laravel and other php packages 
 
 ```bash
-php composer install
+composer install
 ```
 3. Navigate to frontend directory and execute following command to install vue+vite project and other javascript packages 
 ```bash
