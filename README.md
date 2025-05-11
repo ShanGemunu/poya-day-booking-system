@@ -21,6 +21,10 @@ composer install
 ```bash
 npm install
 ```
+   **generate key for laravel application using following command**
+```bash
+php artisan key:generate
+```
 4. Setup database
    1. create .env file by using copy of .env.example file and change values of 
 
