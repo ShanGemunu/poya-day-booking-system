@@ -21,10 +21,6 @@ composer install
 ```bash
 npm install
 ```
-   **generate key for laravel application using following command**
-```bash
-php artisan key:generate
-```
 4. Setup database
    1. create .env file by using copy of .env.example file and change values of 
 
@@ -33,8 +29,13 @@ php artisan key:generate
          - DB_USERNAME
          - DB_PASSWORD
      
-       according to your database server
-   2. create database called 'poya_day_booking_system' as described in DB_DATABASE value of .env file
+       according to your database server and
+      
+        **generate key for laravel application using following command**
+        ```bash
+        php artisan key:generate
+        ```
+   3. create database called 'poya_day_booking_system' as described in DB_DATABASE value of .env file
 
 5. Run migration and seeding database
    1. start database server
