@@ -61,7 +61,7 @@ npm run dev
 
   - login page
       -  user can login here using credentials, **sample admin credentials,  email: admin@mail.com, password - 1234**  
-      ![alt text](https://github.com/ShanGemunu/poya-day-booking-system/blob/main/readme-images/login_protal.png?raw=true)
+      ![alt text](https://github.com/ShanGemunu/poya-day-booking-system/blob/main/readme-images/login_page.png?raw=true)
 
   - admin portal  
       -  need to logged as admin to work (sample admin credentials are provided above)
